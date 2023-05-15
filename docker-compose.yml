@@ -4,8 +4,8 @@ services:
   sqs:
     image: roribio16/alpine-sqs
     ports:
-      - '9324:9324'
-      - '9325:9325'
+      - '9334:9324'
+      - '9335:9325'
     volumes:
       - my-datavolume:/sqs-data
 volumes:
