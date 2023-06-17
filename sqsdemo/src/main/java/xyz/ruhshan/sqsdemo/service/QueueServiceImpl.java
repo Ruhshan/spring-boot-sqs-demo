@@ -25,6 +25,7 @@ public class QueueServiceImpl implements QueueService {
     public void publishTask(Task task) {
 
         task.setId(UUID.randomUUID().toString());
+        task.setArrivedAt(Instant.now());
         log.info("Publishing task to queue {}", task);
 
         queueMessagingTemplate.convertAndSend(taskQueue, task);
