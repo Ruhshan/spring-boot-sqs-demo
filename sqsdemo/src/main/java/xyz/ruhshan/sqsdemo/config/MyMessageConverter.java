@@ -8,6 +8,7 @@ import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 
 @Component
 public class MyMessageConverter implements MessageConverter {
@@ -19,7 +20,8 @@ public class MyMessageConverter implements MessageConverter {
 
     @Override
     public Object fromMessage(Message<?> message, Class<?> targetClass) {
-        return null;
+        Object payload = message.getPayload();
+        return ClassUtils.isAssignableValue(targetClass, payload) ? payload : null;
     }
 
     @Override
