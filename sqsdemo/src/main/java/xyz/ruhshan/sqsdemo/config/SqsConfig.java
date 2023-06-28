@@ -55,4 +55,20 @@ public class SqsConfig {
 
     }
 
+    @Bean
+    public QueueMessageHandlerFactory queueMessageHandlerFactory(ObjectMapper objectMapper, AmazonSQSAsync amazonSQSAsync) {
+        MappingJackson2MessageConverter messageConverter = new MappingJackson2MessageConverter();
+        messageConverter.setObjectMapper(objectMapper);
+        messageConverter.setStrictContentTypeMatch(false);
+
+        QueueMessageHandlerFactory factory = new QueueMessageHandlerFactory();
+        factory.setAmazonSqs(amazonSQSAsync);
+
+        List<HandlerMethodArgumentResolver> resolvers = List.of(
+                new PayloadMethodArgumentResolver(messageConverter,null, false));
+        factory.setArgumentResolvers(resolvers);
+
+        return factory;
+    }
+
 }
